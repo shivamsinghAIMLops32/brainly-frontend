@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { ReactElement } from "react";
+
+type Variants = "primary" | "secondary";
+type Size = "sm" | "lg" | "md";
 
 export interface ButtonProps {
-  size: "sm"|"lg"|"md";
-  variant: "primary"|"secondary";
+  size: Size;
+  variant: Variants;
   disabled?: boolean;
-  text:string;
+  text: string;
   onClick?: () => void;
-  startIcon?:any;  // optional
-  endIcon?: any;
+  startIcon?: ReactElement; // optional
+  endIcon?: ReactElement;
 }
-const Button = (props:ButtonProps) => {
+
+const variantStyles: Record<Variants, string> = {
+  primary: "bg-[var(--color-purple-600)] text-white",
+  secondary: "bg-[var(--color-purple-400)] text-[var(--color-purple-600)]",
+};
+
+const sizeStyles: Record<Size, string> = {
+  sm: "px-4 py-2",
+  lg: "px-8 py-3",
+  md: "px-6 py-3",
+};
+
+
+
+const Button = ({ text, variant, size, startIcon, endIcon, onClick, disabled }: ButtonProps) => {
   return (
-    <div >{props.text}</div>
-  )
-}
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`${variantStyles[variant]} ${sizeStyles[size] } flex items-center gap-2 rounded-md m-4 transition-all duration-300`}
+    >
+      {startIcon && <span>{startIcon}</span>}
+      {text}
+      {endIcon && <span>{endIcon}</span>}
+    </button>
+  );
+};
 
-//<Button endIcon={"+"} startIcon={"-"} size='sm' variant='primary' text={'signup'} onClick={()=>{alert("hey")}} ></Button>
-
-export default Button
+export default Button;
