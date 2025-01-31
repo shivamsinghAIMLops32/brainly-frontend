@@ -1,43 +1,50 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
-type Variants = "primary" | "secondary";
-type Size = "sm" | "lg" | "md";
-
-export interface ButtonProps {
-  size: Size;
-  variant: Variants;
-  disabled?: boolean;
-  text: string;
-  onClick?: () => void;
-  startIcon?: ReactElement; // optional
-  endIcon?: ReactElement;
+type ButtonSize = "sm" | "md" | "lg";
+type ButtonTVariants = "primary" | "secondary";
+export interface ButtonPropsInterface {
+  title: string;
+  onclick?: () => void;
+  frontIcon?: ReactElement;
+  backIcon?: ReactElement;
+  isdisabled?: boolean;
+  size: ButtonSize;
+  variants: ButtonTVariants;
 }
 
-const variantStyles: Record<Variants, string> = {
+const sizeStyle: Record<ButtonSize, string> = {
+  sm: "px-2 py-1 text-sm rounded-sm",
+  md: " px-4 py-2 text-md rounded-md",
+  lg: "px-4 py-4 text-lg rounded-lg",
+};
+
+const buttonVariantStyle: Record<ButtonTVariants, string> = {
   primary: "bg-[var(--color-purple-600)] text-white",
-  secondary: "bg-[var(--color-purple-400)] text-[var(--color-purple-600)]",
+  secondary: "bg-[var(--color-purple-300)] text-black",
 };
 
-const sizeStyles: Record<Size, string> = {
-  sm: "px-4 py-2",
-  lg: "px-8 py-3",
-  md: "px-6 py-3",
-};
-
-
-
-const Button = ({ text, variant, size, startIcon, endIcon, onClick, disabled }: ButtonProps) => {
+const Button = ({
+  title,
+  onclick,
+  frontIcon,
+  backIcon,
+  size,
+  variants,
+  isdisabled,
+}: ButtonPropsInterface) => {
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`${variantStyles[variant]} ${sizeStyles[size] } flex items-center gap-2 rounded-md m-4 transition-all duration-300`}
-    >
-      {startIcon && <span>{startIcon}</span>}
-      {text}
-      {endIcon && <span>{endIcon}</span>}
-    </button>
+    <>
+      <button className={` ${sizeStyle[size]} ${buttonVariantStyle[variants]} m-2 hover:cursor-pointer duration-75 ease-in`} onClick={isdisabled ? undefined : onclick}>
+        <div className="flex items-center">
+        {frontIcon && <span>{frontIcon}</span>}
+        <div className="px-1 py-1">
+
+        {title}
+        </div>
+        {backIcon && <span>{backIcon}</span>}
+        </div>
+      </button>
+    </>
   );
 };
-
 export default Button;

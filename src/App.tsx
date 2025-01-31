@@ -4,10 +4,13 @@ import PlusIcon from "./icons/PlusIcon";
 import ShareIcon from "./icons/ShareIcon";
 
 const App = () => {
+  const onclick = ()=>{
+    console.log("Button clicked");
+  }
   return (
     <>
-      <Button variant="primary" text="Share" size="sm" startIcon={<span><ShareIcon/></span>} />
-      <Button variant="secondary" text="Add Content" size="lg" startIcon={<span><PlusIcon/></span>} />
+      <Button title={"SignUp"} frontIcon={<PlusIcon size="md"/>} size={"md"} onclick={onclick} variants="primary"/>
+      <Button title={"Share"} frontIcon={<ShareIcon size="md" />} size={"md"} variants="secondary"/>
     </>
   );
 };
